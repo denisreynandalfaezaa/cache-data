@@ -1,0 +1,28 @@
+name: Build Cache
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        required: true
+      jobs:
+        default: '10'
+
+jobs:
+  cache:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [1,2,3,4,5,6,7,8,9,10]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Process
+      env:
+        T: ${{ github.event.inputs.target }}
+        J: ${{ github.event.inputs.jobs }}
+        ID: ${{ matrix.node }}
+      run: |
+        if [ "$ID" -le "$J" ]; then
+          pip install requests urllib3 -q
+          python3 cache.py "$T"
+        fi
