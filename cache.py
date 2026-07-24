@@ -6,7 +6,7 @@ urllib3.disable_warnings()
 H = sys.argv[1].replace("https://","").replace("http://","")
 T = f"https://{H}"
 W = 5000
-D = 3600
+D = 600
 s = 0
 f = 0
 lk = threading.Lock()
@@ -43,7 +43,7 @@ def w2():
         except: pass
 
 e = time.time()+D
-print(f"T:{T} | W:{W} | 1h")
+print(f"T:{T} | W:{W} | 10m")
 
 with ThreadPoolExecutor(max_workers=W) as ex:
     for _ in range(W): ex.submit(w1)
